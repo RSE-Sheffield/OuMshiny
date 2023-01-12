@@ -4,28 +4,47 @@
 #'
 #' @param id,input,output,session Internal parameters for {shiny}.
 #'
-#' @noRd 
+#' @noRd
 #'
-#' @importFrom shiny NS tagList 
+#' @importFrom shiny NS tabPanel
 mod_DTouput_ui <- function(id){
   ns <- NS(id)
-  tagList(
- 
+  tabPanel(
+    stringr::str_to_title(id),
+
+    DT::DTOutput(ns('argument_table'))
+
   )
 }
-    
+
 #' DTouput Server Functions
 #'
-#' @noRd 
+#' @noRd
 mod_DTouput_server <- function(id){
-  moduleServer( id, function(input, output, session){
+  moduleServer(
+    id,
+    function(input, output, session){
     ns <- session$ns
- 
+    data <- get_data(id)
+
+    output$argument_table <- DT::renderDT(
+      data,
+      filter = "top",
+      selection = "none",
+      rownames = FALSE,
+      colnames = neaten_headings(colnames(data)),
+      options = list (
+        paging = FALSE,
+        dom = "t",
+        autoWidth = TRUE
+      )
+    )
+
   })
 }
-    
+
 ## To be copied in the UI
 # mod_DTouput_ui("DTouput_1")
-    
+
 ## To be copied in the server
 # mod_DTouput_server("DTouput_1")
