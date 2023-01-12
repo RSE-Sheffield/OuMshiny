@@ -21,12 +21,12 @@
 golem::fill_desc(
   pkg_name = "OuM_shiny", # The Name of the package containing the App
   pkg_title = "App for exploring the Opening up our Minds data", # The Title of the package containing the App
-  pkg_description = "An app that allows users to sort, filter, and search the
-  arguments collected and rated around specific topics as part of the Opening up our Minds project.", # The Description of the package containing the App
+  pkg_description = "An app that allows users to sort, filter, and search the arguments collected and rated around specific topics as part of the Opening up our Minds project.", # The Description of the package containing the App
   author_first_name = "Daniel", # Your First Name
   author_last_name = "Brady", # Your Last Name
-  author_email = "danie;.brady@sheffield.ac.uk", # Your Email
-  repo_url = NULL # The URL of the GitHub Repo (optional)
+  author_email = "daniel.brady@sheffield.ac.uk", # Your Email
+  author_orcid = "0000-0003-4671-0676",
+  repo_url = "https://github.com/RSE-Sheffield/OuM_shiny" # The URL of the GitHub Repo (optional)
 )
 
 ## Set {golem} options ----
@@ -38,9 +38,9 @@ usethis::use_mit_license("Golem User") # You can set another license here
 usethis::use_readme_rmd(open = FALSE)
 # Note that `contact` is required since usethis version 2.1.5
 # If your {usethis} version is older, you can remove that param
-usethis::use_code_of_conduct(contact = "Golem User")
-usethis::use_lifecycle_badge("Experimental")
-usethis::use_news_md(open = FALSE)
+#usethis::use_code_of_conduct(contact = "Golem User")
+#usethis::use_lifecycle_badge("Experimental")
+#usethis::use_news_md(open = FALSE)
 
 ## Use git ----
 usethis::use_git()
@@ -51,7 +51,7 @@ golem::use_recommended_tests()
 
 ## Favicon ----
 # If you want to change the favicon (default is golem's one)
-golem::use_favicon() # path = "path/to/ico". Can be an online file.
+# golem::use_favicon() # path = "path/to/ico". Can be an online file.
 # golem::remove_favicon() # Uncomment to remove the default favicon
 
 ## Add helper functions ----
