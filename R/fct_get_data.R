@@ -93,3 +93,30 @@ extract_condition <- function(filepath) {
 
   return(cond_factor)
 }
+
+#' aggregate_response_ratings
+#'
+#' @description Summaries data-set by calculating the mean response rating for
+#' each argument
+#'
+#' @param data_in Data frame to be aggregated
+#'
+#' @return Aggregated data frame
+aggregate_response_ratings <- function(data_in) {
+
+  first <- dplyr::first
+
+  grouped_data <- dplyr::group_by(data_in, arguments)
+
+  mean_data <- dplyr::summarise(
+    grouped_data,
+    arguments = first(arguments),
+    argument_position = first(argument_position),
+    arguer_position = first(arguer_position),
+    rater_position = first(rater_position),
+    mean_rating = mean(response_ratings),
+    .groups = "drop")
+
+  return(mean_data)
+}
+
