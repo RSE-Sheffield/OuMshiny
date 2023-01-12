@@ -55,3 +55,26 @@ wrangle_raw_ITT_data <- function(filepath) {
 
   return(data_out)
 }
+
+
+#' get_colspec
+#'
+#' @description function detailing the columns to be loaded form the data-sets
+#' and their data types
+#'
+#' @return Column specification for columns to be loaded from data
+
+get_colspec <- function() {
+
+  column_spec = readr::cols_only(
+    Arguments = "c",
+    argument_Position = "f",
+    Arguer_Position = "f",
+    rater_position = "f",
+    response_ratings = "i",
+    argument_ID = "i",
+    argument_index = "i"
+  )
+
+  return(column_spec)
+}
