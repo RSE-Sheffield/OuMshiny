@@ -17,3 +17,41 @@ get_data <- function(label) {
 
   return(full_data)
 }
+
+#' wrangle_raw_ITT_data
+#'
+#' @description function that loads, cleans and aggregates individual data-sets
+#' before they are joined
+#'
+#' @param filepath Path to a specific data-set
+#'
+#' @return Cleaned and aggregated data-sets
+wrangle_raw_ITT_data <- function(filepath) {
+
+  raw_data <- readr::read_csv(filepath, col_types = get_colspec())
+  cleaned_headers <- dplyr::rename_with(raw_data, stringr::str_to_lower)
+
+  recoded_factors <- dplyr::mutate(cleaned_headers,
+                                   argument_position = forcats::fct_recode(
+                                     argument_position,
+                                     Pro = "For",
+                                     Anti = "Against"),
+                                   arguer_position = forcats::fct_recode(
+                                     arguer_position,
+                                     Pro = "PRO",
+                                     Anti = "ANTI"))
+
+  aggregated_data <- aggregate_response_ratings(recoded_factors)
+
+  added_condition <- dplyr::mutate(aggregated_data,
+                                   condition = extract_condition(filepath),
+                                   .after = arguments)
+
+  data_out <- dplyr::mutate(added_condition,
+                            ITT_Passed = dplyr::case_when(
+                              condition != "ITT" ~ NA,
+                              mean_rating >= 5.5 ~ TRUE,
+                              mean_rating < 5.5 ~ FALSE))
+
+  return(data_out)
+}
