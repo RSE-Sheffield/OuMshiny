@@ -78,3 +78,18 @@ get_colspec <- function() {
 
   return(column_spec)
 }
+
+#' extract_condition
+#'
+#' @description Gets the condition for the data-set from the file path
+#'
+#' @param filepath Path to a specific data-set
+#'
+#' @return Condition for the data-set as a factor
+extract_condition <- function(filepath) {
+
+  condition <- stringr::str_extract(filepath, "(?<=_)[:alpha:]+(?=Data)")
+  cond_factor <- factor(condition)
+
+  return(cond_factor)
+}
