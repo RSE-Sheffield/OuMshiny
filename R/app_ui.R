@@ -9,8 +9,15 @@ app_ui <- function(request) {
     # Leave this function for adding external resources
     golem_add_external_resources(),
     # Your application UI logic
-    fluidPage(
-      h1("OuM_shiny")
+    navbarPage(
+      "OuM Shiny App",
+      tabPanel(
+        "Home",
+        #includeMarkdown("readme.md")
+      ),
+      mod_DTouput_ui("vaccine"),
+      mod_DTouput_ui("brexit"),
+      mod_DTouput_ui("vegan"),
     )
   )
 }
