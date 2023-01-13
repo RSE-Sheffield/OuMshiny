@@ -7,9 +7,9 @@
 #' @return Returns data-frame ready to be presented in Shiny app
 #'
 #' @export
-get_data <- function(label) {
+get_data <- function(label, path = "data/") {
 
-  files <- list.files("data/", label, full.names = TRUE)
+  files <- list.files(path, label, full.names = TRUE)
 
   full_data <- purrr::list_rbind(
     purrr::map(files, wrangle_raw_ITT_data)
