@@ -7,12 +7,12 @@
 #' @noRd
 #'
 #' @importFrom shiny NS tabPanel
-mod_DTouput_ui <- function(id){
+mod_dtouput_ui <- function(id) {
   ns <- NS(id)
   tabPanel(
     stringr::str_to_title(id),
 
-    DT::DTOutput(ns('argument_table'))
+    DT::DTOutput(ns("argument_table"))
 
   )
 }
@@ -20,10 +20,10 @@ mod_DTouput_ui <- function(id){
 #' DTouput Server Functions
 #'
 #' @noRd
-mod_DTouput_server <- function(id){
+mod_dtouput_server <- function(id) {
   moduleServer(
     id,
-    function(input, output, session){
+    function(input, output, session) {
     ns <- session$ns
     data <- get_data(id)
 
@@ -33,7 +33,7 @@ mod_DTouput_server <- function(id){
       selection = "none",
       rownames = FALSE,
       colnames = neaten_headings(colnames(data)),
-      options = list (
+      options = list(
         paging = FALSE,
         dom = "t",
         autoWidth = TRUE
@@ -42,9 +42,3 @@ mod_DTouput_server <- function(id){
 
   })
 }
-
-## To be copied in the UI
-# mod_DTouput_ui("DTouput_1")
-
-## To be copied in the server
-# mod_DTouput_server("DTouput_1")

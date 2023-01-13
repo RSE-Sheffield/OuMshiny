@@ -17,13 +17,13 @@ neaten_headings <- function(column_names) {
   # remove underscores at beginning and end
   underscore_replaced <- stringr::str_remove_all(column_names, "^_+|_+$")
 
-  # replace any sequence of underscores in middle of the string with a single space
+  # replace any sequence of underscores in middle the string with a single space
   underscore_replaced <- stringr::str_replace_all(underscore_replaced,
                                                   "(?<=\\w)_+(?=\\w)", " ")
 
   title_case <- stringr::str_to_title(underscore_replaced)
 
-  ITT_all_caps <- stringr::str_replace(title_case, "(?<=\\b)Itt(?=\\b)", "ITT")
+  itt_all_caps <- stringr::str_replace(title_case, "(?<=\\b)Itt(?=\\b)", "ITT")
 
-  return(ITT_all_caps)
+  return(itt_all_caps)
 }

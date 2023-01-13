@@ -26,7 +26,7 @@ get_data <- function(label, path = "data/") {
 #' @param filepath Path to a specific data-set
 #'
 #' @return Cleaned and aggregated data-sets
-wrangle_raw_ITT_data <- function(filepath) {
+wrangle_raw_itt_data <- function(filepath) {
 
   raw_data <- readr::read_csv(filepath, col_types = get_colspec())
   cleaned_headers <- dplyr::rename_with(raw_data, stringr::str_to_lower)
@@ -63,10 +63,9 @@ wrangle_raw_ITT_data <- function(filepath) {
 #' and their data types
 #'
 #' @return Column specification for columns to be loaded from data
-
 get_colspec <- function() {
 
-  column_spec = readr::cols_only(
+  column_spec <- readr::cols_only(
     Arguments = "c",
     argument_Position = "f",
     Arguer_Position = "f",
@@ -102,9 +101,9 @@ extract_condition <- function(filepath) {
 #' @param data_in Data frame to be aggregated
 #'
 #' @return Aggregated data frame
+#'
+#' @importFrom dplyr first
 aggregate_response_ratings <- function(data_in) {
-
-  first <- dplyr::first
 
   grouped_data <- dplyr::group_by(data_in, arguments)
 
@@ -119,4 +118,3 @@ aggregate_response_ratings <- function(data_in) {
 
   return(mean_data)
 }
-

@@ -15,9 +15,9 @@ app_ui <- function(request) {
         "Home",
         #includeMarkdown("readme.md")
       ),
-      mod_DTouput_ui("vaccine"),
-      mod_DTouput_ui("brexit"),
-      mod_DTouput_ui("vegan"),
+      mod_dtouput_ui("vaccine"),
+      mod_dtouput_ui("brexit"),
+      mod_dtouput_ui("vegan"),
     )
   )
 }

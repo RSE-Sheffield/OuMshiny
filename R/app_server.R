@@ -5,7 +5,7 @@
 #' @import shiny
 #' @noRd
 app_server <- function(input, output, session) {
-  mod_DTouput_server("vaccine")
-  mod_DTouput_server("vegan")
-  mod_DTouput_server("brexit")
+  mod_dtouput_server("vaccine")
+  mod_dtouput_server("vegan")
+  mod_dtouput_server("brexit")
 }
