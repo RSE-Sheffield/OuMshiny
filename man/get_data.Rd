@@ -4,7 +4,7 @@
 \alias{get_data}
 \title{get_data}
 \usage{
-get_data(label)
+get_data(label, path = "data/")
 }
 \arguments{
 \item{label}{String indicating which data-set(s) to get}

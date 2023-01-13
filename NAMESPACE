@@ -3,6 +3,7 @@
 export(get_data)
 export(neaten_headings)
 export(run_app)
+import(dplyr)
 import(shiny)
 importFrom(golem,activate_js)
 importFrom(golem,add_resource_path)

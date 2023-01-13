@@ -10,15 +10,20 @@ Description: An app that allows users to sort, filter, and search the
 License: What license is it under?
 URL: https://github.com/RSE-Sheffield/OuM_shiny
 BugReports: https://github.com/RSE-Sheffield/OuM_shiny/issues
+Depends: 
+    R (>= 2.10)
 Imports: 
-    attempt,
     config (>= 0.3.1),
+    dplyr,
     DT,
-    glue,
+    forcats,
     golem (>= 0.3.5),
-    htmltools,
-    shiny (>= 1.7.4)
+    purrr,
+    readr,
+    shiny (>= 1.7.4),
+    stringr
 Suggests: 
+    covr,
     spelling,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
@@ -26,5 +31,3 @@ Encoding: UTF-8
 Language: en-GB
 LazyData: true
 RoxygenNote: 7.2.3
-Depends: 
-    R (>= 2.10)

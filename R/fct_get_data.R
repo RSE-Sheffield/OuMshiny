@@ -26,32 +26,36 @@ get_data <- function(label, path = "data/") {
 #' @param filepath Path to a specific data-set
 #'
 #' @return Cleaned and aggregated data-sets
+#'
+#' @import dplyr
 wrangle_raw_itt_data <- function(filepath) {
 
   raw_data <- readr::read_csv(filepath, col_types = get_colspec())
-  cleaned_headers <- dplyr::rename_with(raw_data, stringr::str_to_lower)
+  cleaned_headers <- rename_with(raw_data, stringr::str_to_lower)
 
-  recoded_factors <- dplyr::mutate(cleaned_headers,
-                                   argument_position = forcats::fct_recode(
-                                     argument_position,
-                                     Pro = "For",
-                                     Anti = "Against"),
-                                   arguer_position = forcats::fct_recode(
-                                     arguer_position,
-                                     Pro = "PRO",
-                                     Anti = "ANTI"))
+  recoded_factors <- mutate(cleaned_headers,
+                            argument_position = forcats::fct_recode(
+                              argument_position,
+                              Pro = "For",
+                              Anti = "Against"),
+                            arguer_position = forcats::fct_recode(
+                              arguer_position,
+                              Pro = "PRO",
+                              Anti = "ANTI"))
 
   aggregated_data <- aggregate_response_ratings(recoded_factors)
 
-  added_condition <- dplyr::mutate(aggregated_data,
-                                   condition = extract_condition(filepath),
-                                   .after = arguments)
+  added_condition <- mutate(aggregated_data,
+                            condition = extract_condition(filepath),
+                            .after = arguments)
 
-  data_out <- dplyr::mutate(added_condition,
-                            ITT_Passed = dplyr::case_when(
-                              condition != "ITT" ~ NA,
-                              mean_rating >= 5.5 ~ TRUE,
-                              mean_rating < 5.5 ~ FALSE))
+  data_out <- mutate(added_condition,
+                     ITT_Passed = dplyr::case_when(
+                       condition != "ITT" ~ NA,
+                       mean_rating >= 5.5 ~ TRUE,
+                       mean_rating < 5.5 ~ FALSE
+                       )
+                     )
 
   return(data_out)
 }
@@ -102,12 +106,12 @@ extract_condition <- function(filepath) {
 #'
 #' @return Aggregated data frame
 #'
-#' @importFrom dplyr first
+#' @import dplyr
 aggregate_response_ratings <- function(data_in) {
 
-  grouped_data <- dplyr::group_by(data_in, arguments)
+  grouped_data <- group_by(data_in, arguments)
 
-  mean_data <- dplyr::summarise(
+  mean_data <- summarise(
     grouped_data,
     arguments = first(arguments),
     argument_position = first(argument_position),
