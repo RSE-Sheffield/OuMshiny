@@ -12,7 +12,7 @@ get_data <- function(label, path = "data/") {
   files <- list.files(path, label, full.names = TRUE)
 
   full_data <- purrr::list_rbind(
-    purrr::map(files, wrangle_raw_ITT_data)
+    purrr::map(files, wrangle_raw_itt_data)
   )
 
   return(full_data)
