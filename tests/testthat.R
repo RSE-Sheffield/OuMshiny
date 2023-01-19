@@ -7,6 +7,6 @@
 # * https://testthat.r-lib.org/reference/test_package.html#special-files
 
 library(testthat)
-library(OuM_shiny)
+library(OuMshiny)
 
-test_check("OuM_shiny")
+test_check("OuMshiny")
