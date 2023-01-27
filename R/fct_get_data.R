@@ -11,45 +11,28 @@ get_data <- function(label, path = "data/") {
 
   files <- list.files(path, label, full.names = TRUE)
 
-  full_data <- purrr::list_rbind(
-    purrr::map(files, wrangle_raw_itt_data)
-  )
+  full_data <- aggregate_itt_data(files)
 
   return(full_data)
 }
 
-#' wrangle_raw_ITT_data
+#' aggregate_itt_data
 #'
-#' @description function that loads, cleans and aggregates individual data-sets
-#' before they are joined
+#' @description function that aggregates data-sets and adds IIT passed col
 #'
 #' @param filepath Path to a specific data-set
 #'
-#' @return Cleaned and aggregated data-sets
+#' @return Aggregated data-set
 #'
 #' @import dplyr
-wrangle_raw_itt_data <- function(filepath) {
+aggregate_itt_data <- function(filepath) {
 
   raw_data <- readr::read_csv(filepath, col_types = get_colspec())
-  cleaned_headers <- rename_with(raw_data, stringr::str_to_lower)
-
-  recoded_factors <- mutate(cleaned_headers,
-                            argument_position = forcats::fct_recode(
-                              argument_position,
-                              Pro = "For",
-                              Anti = "Against"),
-                            arguer_position = forcats::fct_recode(
-                              arguer_position,
-                              Pro = "PRO",
-                              Anti = "ANTI"))
 
   aggregated_data <- aggregate_response_ratings(recoded_factors)
 
-  added_condition <- mutate(aggregated_data,
-                            condition = extract_condition(filepath),
-                            .after = arguments)
 
-  data_out <- mutate(added_condition,
+  data_out <- mutate(aggregated_data,
                      ITT_Passed = dplyr::case_when(
                        condition != "ITT" ~ NA,
                        mean_rating >= 5.5 ~ TRUE,
@@ -82,21 +65,6 @@ get_colspec <- function() {
   return(column_spec)
 }
 
-#' extract_condition
-#'
-#' @description Gets the condition for the data-set from the file path
-#'
-#' @param filepath Path to a specific data-set
-#'
-#' @return Condition for the data-set as a factor
-extract_condition <- function(filepath) {
-
-  condition <- stringr::str_extract(filepath, "(?<=_)[:alpha:]+(?=Data)")
-  cond_factor <- factor(condition)
-
-  return(cond_factor)
-}
-
 #' aggregate_response_ratings
 #'
 #' @description Summaries data-set by calculating the mean response rating for
@@ -114,9 +82,10 @@ aggregate_response_ratings <- function(data_in) {
   mean_data <- summarise(
     grouped_data,
     arguments = first(arguments),
-    argument_position = first(argument_position),
     arguer_position = first(arguer_position),
+    argument_position = first(argument_position),
     rater_position = first(rater_position),
+    condition = first(condition),
     mean_rating = mean(response_ratings),
     .groups = "drop")
 
