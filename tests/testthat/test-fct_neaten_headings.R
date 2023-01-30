@@ -1,7 +1,7 @@
 test_that("only underscores removed", {
-  expect_equal(neaten_headings("_fgh"), " Fgh")
+  expect_equal(neaten_headings("_fgh"), "Fgh")
   expect_equal(neaten_headings("f_gh"), "F Gh")
-  expect_equal(neaten_headings("xyz_"), "Xyz ")
+  expect_equal(neaten_headings("xyz_"), "Xyz")
   expect_equal(neaten_headings("x.y.z__"), "X.y.z")
 })
 

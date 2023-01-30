@@ -4,10 +4,10 @@
 \alias{aggregate_itt_data}
 \title{aggregate_itt_data}
 \usage{
-aggregate_itt_data(filepath)
+aggregate_itt_data(raw_data)
 }
 \arguments{
-\item{filepath}{Path to a specific data-set}
+\item{raw_data}{unaggregated data-set}
 }
 \value{
 Aggregated data-set
