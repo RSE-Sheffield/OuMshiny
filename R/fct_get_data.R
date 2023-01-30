@@ -7,11 +7,14 @@
 #' @return Returns data-frame ready to be presented in Shiny app
 #'
 #' @export
-get_data <- function(label, path = "data/") {
+get_data <- function(label) {
 
-  files <- list.files(path, label, full.names = TRUE)
+  raw_data <- switch(label,
+                     "brexit" = OuMshiny::brexit_data,
+                     "vaccine" = OuMshiny::vaccine_data,
+                     "vegan" = OuMshiny::veganism_data)
 
-  full_data <- aggregate_itt_data(files)
+  full_data <- aggregate_itt_data(raw_data)
 
   return(full_data)
 }
@@ -25,12 +28,9 @@ get_data <- function(label, path = "data/") {
 #' @return Aggregated data-set
 #'
 #' @import dplyr
-aggregate_itt_data <- function(filepath) {
+aggregate_itt_data <- function(raw_data) {
 
-  raw_data <- readr::read_csv(filepath, col_types = get_colspec())
-
-  aggregated_data <- aggregate_response_ratings(recoded_factors)
-
+  aggregated_data <- aggregate_response_ratings(raw_data)
 
   data_out <- mutate(aggregated_data,
                      ITT_Passed = dplyr::case_when(
@@ -44,27 +44,6 @@ aggregate_itt_data <- function(filepath) {
 }
 
 
-#' get_colspec
-#'
-#' @description function detailing the columns to be loaded form the data-sets
-#' and their data types
-#'
-#' @return Column specification for columns to be loaded from data
-get_colspec <- function() {
-
-  column_spec <- readr::cols_only(
-    Arguments = "c",
-    argument_Position = "f",
-    Arguer_Position = "f",
-    rater_position = "f",
-    response_ratings = "i",
-    argument_ID = "i",
-    argument_index = "i"
-  )
-
-  return(column_spec)
-}
-
 #' aggregate_response_ratings
 #'
 #' @description Summaries data-set by calculating the mean response rating for
@@ -77,7 +56,7 @@ get_colspec <- function() {
 #' @import dplyr
 aggregate_response_ratings <- function(data_in) {
 
-  grouped_data <- group_by(data_in, arguments)
+  grouped_data <- group_by(data_in, argument_index)
 
   mean_data <- summarise(
     grouped_data,
