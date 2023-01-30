@@ -12,7 +12,7 @@ get_data <- function(label) {
   raw_data <- switch(label,
                      "brexit" = OuMshiny::brexit_data,
                      "vaccine" = OuMshiny::vaccine_data,
-                     "vegan" = OuMshiny::veganism_data)
+                     "veganism" = OuMshiny::veganism_data)
 
 
   full_data <- aggregate_itt_data(raw_data)

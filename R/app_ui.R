@@ -17,7 +17,7 @@ app_ui <- function(request) {
       ),
       mod_dtouput_ui("vaccine"),
       mod_dtouput_ui("brexit"),
-      mod_dtouput_ui("vegan"),
+      mod_dtouput_ui("veganism"),
     )
   )
 }
