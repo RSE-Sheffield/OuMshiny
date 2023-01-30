@@ -13,7 +13,7 @@ app_ui <- function(request) {
       "OuM Shiny App",
       tabPanel(
         "Home",
-        #includeMarkdown("readme.md")
+        includeMarkdown("outline.md")
       ),
       mod_dtouput_ui("vaccine"),
       mod_dtouput_ui("brexit"),
