@@ -5,18 +5,23 @@
 
 The purpose of the OuM app is to allow for the exploration of the data
 collected as part of the Opening up our Minds project. Specifically, it
-allows users to view the arguments made for or against a particular
-topic, explore whether they were made by an individuals whose views
-aligned with the argument in question (i.e. whether they were pro or
-anti that topic), how they were rated by others and whether the raters
-were pro-or anti that topic.
+allows users to:
+
+- View the arguments made for or against a particular topic
+
+- Explore whether the argument was made by an individual whose views
+  aligned with the argument in question (i.e. whether they were pro or
+  anti that topic)
+
+- How the arguments were rated by others who were pro- or anti- that
+  topic.
 
 ## Installation
 
 You can install the development version of OuMshiny like so:
 
 ``` r
-# FILL THIS IN! HOW CAN PEOPLE INSTALL YOUR DEV PACKAGE?
+devtools::install_github("RSE-Sheffield/OuMshiny")
 ```
 
 ## Run the app
@@ -26,5 +31,3 @@ Once installed you can run the app locally like so:
 ``` r
 OuMshiny::run_app()
 ```
-
-<div style="width: 100% ; height: 400px ; text-align: center; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box;" class="muted well">Shiny applications not supported in static R Markdown documents</div>
