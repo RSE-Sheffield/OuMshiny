@@ -10,8 +10,9 @@
 mod_dtouput_ui <- function(id) {
   ns <- NS(id)
   tabPanel(
-    stringr::str_to_title(id),
+    title <- stringr::str_to_title(id),
 
+    h2(title),
     DT::DTOutput(ns("argument_table"))
 
   )
