@@ -1,0 +1,13 @@
+name: OuMshiny
+title: OuMshiny
+username:
+account: danielbrady21
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 8167066
+bundleId: 6789835
+url: https://danielbrady21.shinyapps.io/OuMshiny/
+when: 1675091774.54299
+lastSyncTime: 1675091774.54302
+asMultiple: FALSE
+asStatic: FALSE
