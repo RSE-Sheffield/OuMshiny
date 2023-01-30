@@ -1,5 +1,7 @@
 # Opening up our minds project
 
+Run by [Lotty Brand](https://lottybrand.wordpress.com/) and [Tom Stafford](https://tomstafford.sites.sheffield.ac.uk/)
+
 ## Overview
 
 The Ideological Turing Test (ITT) is an attempt to measure people's ability to take the perspective of those on the other side of a debate to themselves, by providing arguments for the opposite side (henceforth 'opponents') that "pass" as being written by opponents, in that it is agreed with by the opponents to the same extent as arguments written by opponents.
