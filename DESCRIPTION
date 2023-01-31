@@ -7,7 +7,7 @@ Authors@R:
 Description: An app that allows users to sort, filter, and search the
     arguments collected and rated around specific topics as part of the
     Opening up our Minds project.
-License: What license is it under?
+License: GPL (>= 3)
 URL: https://github.com/RSE-Sheffield/OuM_shiny
 BugReports: https://github.com/RSE-Sheffield/OuM_shiny/issues
 Depends: 
