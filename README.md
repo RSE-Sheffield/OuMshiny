@@ -18,10 +18,13 @@ allows users to:
 
 ## Installation
 
-You can install the development version of OuMshiny like so:
+You can install the development version of OuMshiny by
+downloading/cloning this repo, and then executing the following commands
+in R
 
 ``` r
-devtools::install_github("RSE-Sheffield/OuMshiny")
+devtools::install('./')
+OuMshiny::run_app()
 ```
 
 ## Run the app
