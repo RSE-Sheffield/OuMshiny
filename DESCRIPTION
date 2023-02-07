@@ -1,15 +1,36 @@
-Package: OuM_shiny
+Package: OuMshiny
 Title: App for exploring the Opening up our Minds data
 Version: 0.0.0.9000
-Authors@R: person('Daniel', 'Brady', email = 'daniel.brady@sheffield.ac.uk', role = c('cre', 'aut'), comment = c(ORCID = '0000-0003-4671-0676'))
-Description: An app that allows users to sort, filter, and search the arguments collected and rated around specific topics as part of the Opening up our Minds project.
-License: What license is it under?
-Imports: 
-    config (>= 0.3.1),
-    golem (>= 0.3.5),
-    shiny (>= 1.7.4)
-Encoding: UTF-8
-LazyData: true
-RoxygenNote: 7.1.1
+Authors@R: c(
+    person("Daniel", "Brady", , "daniel.brady@sheffield.ac.uk", role = c("cre", "aut"),
+           comment = c(ORCID = "0000-0003-4671-0676")),
+    person("Lotty", "Brand", "c.brand@sheffield.ac.uk", role = "aut"),
+    person("Tom", "Stafford", "t.stafford@sheffield.ac.uk", role = "aut")
+  )
+Description: An app that allows users to sort, filter, and search the
+    arguments collected and rated around specific topics as part of the
+    Opening up our Minds project.
+License: GPL (>= 3)
 URL: https://github.com/RSE-Sheffield/OuM_shiny
 BugReports: https://github.com/RSE-Sheffield/OuM_shiny/issues
+Depends: 
+    R (>= 2.10)
+Imports: 
+    config (>= 0.3.1),
+    dplyr,
+    DT,
+    golem (>= 0.3.5),
+    markdown,
+    pkgload,
+    rlang,
+    shiny (>= 1.7.4),
+    stringr
+Suggests: 
+    covr,
+    spelling,
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+Encoding: UTF-8
+Language: en-GB
+LazyData: true
+RoxygenNote: 7.2.3
