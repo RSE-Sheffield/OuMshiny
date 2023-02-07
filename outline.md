@@ -1,6 +1,6 @@
 # Opening up our minds project
 
-Run by [Lotty Brand](https://lottybrand.wordpress.com/) and [Tom Stafford](https://tomstafford.sites.sheffield.ac.uk/)
+Project devised and run by [Lotty Brand](https://lottybrand.wordpress.com/) and [Tom Stafford](https://tomstafford.sites.sheffield.ac.uk/), app created by Daniel Brady.
 
 ## Overview
 
@@ -18,11 +18,12 @@ We then asked 100 different people from each side of the debate to rate how stro
 
 ## Shiny App
 
-This app then takes the ratings for each argument and calculates the mean rating for that argument.
-This allow for the exploration of the data collected as part of the project. Specifically, allowing users to:
+This app then takes the ratings for each argument and calculates the mean rating for that argument. This allow for the exploration of the data collected as part of the project. Specifically, allowing users to:
 
 -   View the arguments made for or against a particular topic
--   Explore whether the argument was made by an individual whose views aligned with the argument in question (i.e. whether they were pro or anti that topic)
+
+-   Explore whether the argument was made by an individual whose views aligned with the argument in question (i.e. whether they were pro or anti that topic)
+
 -   How the arguments were rated (on average) by others who were pro- or anti- that topic
 
 ## More information
@@ -30,5 +31,7 @@ This allow for the exploration of the data collected as part of the project. Spe
 More information about the project, the results, and this app can be found in the links below:
 
 -   The Paper
+
 -   Data analysis repository
+
 -   [Shiny App repository](https://github.com/RSE-Sheffield/OuMshiny)
