@@ -6,13 +6,18 @@
 #'
 #' @noRd
 #'
-#' @importFrom shiny NS tabPanel
-mod_dtouput_ui <- function(id) {
+#' @importFrom shiny NS tabPanel markdown
+mod_dtouput_ui <- function(id, positions) {
   ns <- NS(id)
+
+  if (id == "vaccine") {
+    id <- "Covid-19 Vaccine"
+  }
   tabPanel(
+
     title <- stringr::str_to_title(id),
 
-    h2(title),
+    markdown(process_text(id, positions)),
     DT::DTOutput(ns("argument_table"))
 
   )
