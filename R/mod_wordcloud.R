@@ -11,7 +11,7 @@ mod_wordcloud_ui <- function(id){
   ns <- NS(id)
   tabPanel(
     title <- id,
-
+    selectInput(ns("dataset"), "Select Dataset", c("vaccine", "brexit", "veganism")),
     plotOutput(ns("plot"))
   )
 }
@@ -20,17 +20,20 @@ mod_wordcloud_ui <- function(id){
 #'
 #' @noRd
 #'
-#' @import ggplot
+#' @import ggplot ggwordcloud
 mod_wordcloud_server <- function(id){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
-    #data <- get_data("vaccines")
-
-    #word_freqs <- generate_word_freqs()
+    word_freqs <- reactive({
+      data <- get_data(input$dataset)
+      word_freqs <- generate_word_freqs(data)
+    })
 
     output$plot <- renderPlot({
-      ggplot(mtcars, aes(wt, mpg)) + geom_point()
-    })
+      ggplot(word_freqs()) +
+        geom_text_wordcloud_area(aes(label = word, size = n)) +
+        scale_size_area(max_size = 15)
+      })
 
   })
 }

@@ -5,6 +5,19 @@
 #' @return The return value, if any, from executing the function.
 #'
 #' @noRd
-generate_word_freqs <- function() {
-  data.frame(a = 1:10, b = 1:10)
+#'
+#' @import tidytext dplyr
+generate_word_freqs <- function(data_in) {
+  tidy_text_df <- data_in %>%
+    tidytext::unnest_tokens(word, arguments) %>%
+    rowwise() %>%
+    mutate(word_len = nchar(word)) %>%
+    filter(word_len > 2) %>%
+    ungroup() %>%
+    #mutate_at("word", funs(wordStem((.), language = "en")))
+    anti_join(tidytext::stop_words) %>%
+    count(word, sort = T) %>%
+    top_n(100)
+
+  return(tidy_text_df)
 }
