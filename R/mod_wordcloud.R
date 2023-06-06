@@ -15,9 +15,9 @@ mod_wordcloud_ui <- function(id){
     selectInput(ns("dataset"), "Select Dataset", c("vaccine", "brexit", "veganism")),
     fluidRow(
       column(5,
-            selectInput(ns("arg_pos1"), "Select Argument position", c("For", "Against")),
-            selectInput(ns("arguer_pos1"), "Select Arguer position", c("Pro", "Anti") ),
-            wordcloud2Output(ns("plot1"))
+            selectInput(ns("arg_pos"), "Select Arguer position", c(" ", "Pro", "Anti")),
+            selectizeInput(ns("condition"), "Select Condition", c(" ", "ITT", "Baseline") ),
+            wordcloud2Output(ns("plot"))
       )
     )
   )
@@ -33,9 +33,15 @@ mod_wordcloud_server <- function(id){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
 
-    output$plot1 <- renderWordcloud2({
+    filtered_data <- reactive({
       data <- get_data(input$dataset)
-      data <- filter(data, argument_position == input$arg_pos1)
+      if (input$arg_pos != " ") data <- filter(data, arguer_position == input$arg_pos)
+      if (input$condition != " ") data <- filter(data, condition == input$condition)
+      return(data)
+    })
+
+    output$plot <- renderWordcloud2({
+      data <- filtered_data()
       word_freqs <- generate_word_freqs(data)
       wordcloud2(word_freqs, rotateRatio = 0)
     })
