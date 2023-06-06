@@ -13,7 +13,7 @@ app_ui <- function(request) {
       "OuM Shiny App",
       tabPanel(
         "Home",
-        includeMarkdown("outline.md")
+        includeMarkdown("inst/outline.md")
       ),
       mod_wordcloud_ui("Wordcloud"),
       mod_dtouput_ui("vaccine", c("Pro-Vaccine", "Vaccine Hesitant")),
