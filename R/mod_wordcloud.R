@@ -27,6 +27,16 @@ mod_wordcloud_ui <- function(id){
   )
 }
 
+wordcloud_ui <- function(id) {
+  ns <- NS(id)
+  tagList(
+    uiOutput(ns("controls")),
+    selectInput(ns("condition"), "Filter by Condition", c("ITT", "Baseline") ),
+    sliderInput(ns("rating"), "Filter by Rating", min = 1, max = 7, value = c(1,7), step = 0.5),
+    wordcloud2Output(ns("plot"))
+  )
+}
+
 
 #' mod_wordcloud Server Functions
 #'
@@ -55,6 +65,27 @@ mod_wordcloud_server <- function(id){
       wordcloud2(word_freqs, rotateRatio = 0)
     })
 
+  })
+}
+
+wordcloud_server <- function(id, ds_name, data) {
+  moduleServer( id, function(input, output, session){
+
+    output$controls <- renderUI({
+      ns <- session$ns
+      selectInput(ns("arg_pos"), "Filter by Arguer position", choices = generate_input_list(ds_name()))
+    })
+
+    filtered_data <- eventReactive(input$arg_pos, {
+      filter(get_data(ds_name()),
+             mean_rating >= input$rating[1] & mean_rating <= input$rating[2],
+             arguer_position == input$arg_pos, condition == input$condition)
+      })
+
+    output$plot <- renderWordcloud2({
+      word_freqs <- generate_word_freqs(filtered_data())
+      wordcloud2(word_freqs, rotateRatio = 0)
+    })
   })
 }
 
