@@ -21,3 +21,12 @@ generate_word_freqs <- function(data_in) {
 
   return(tidy_text_df)
 }
+
+
+generate_input_list <- function(topic) {
+
+  switch(topic,
+         "brexit" = c("Leave" = "Pro", "Remain" = "Anti"),
+         "vaccine" = c("Pro-Vaccine" = "Pro", "Anti-Vaccine" = "Anti"),
+         "veganism" = c("Vegan" = "Pro", "Non-Vegan" = "Anti"))
+}
