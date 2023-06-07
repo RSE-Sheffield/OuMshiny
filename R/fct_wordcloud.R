@@ -15,9 +15,9 @@ generate_word_freqs <- function(data_in) {
     filter(word_len > 2) %>%
     ungroup() %>%
     #mutate_at("word", funs(wordStem((.), language = "en")))
-    anti_join(tidytext::stop_words) %>%
+    anti_join(tidytext::stop_words, by = "word") %>%
     count(word, sort = T) %>%
-    top_n(100)
+    slice_head(n = 100)
 
   return(tidy_text_df)
 }
