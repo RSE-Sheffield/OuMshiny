@@ -15,6 +15,9 @@ mod_wordcloud_ui <- function(id){
                                                    "Brexit" = "brexit",
                                                    "Veganism" = "veganism")),
     hr(),
+    textAreaInput(ns("extra_stopwords"),
+                  "Please enter any additional words you'd like to exclude from the wordcloud\n(seperate each word by a space or newline)"),
+
     fluidRow(
       column(6, wordcloud_ui(ns("left"))),
       column(6, wordcloud_ui(ns("right")))
@@ -59,6 +62,11 @@ mod_wordcloud_server <- function(id){
 
     wordcloud_server("left", ds_name, data)
     wordcloud_server("right", ds_name, data)
+    extra_stopwords <- reactive({ get_extra_stopwords(input$extra_stopwords) })
+
+    data <- reactive({
+      anti_join(tokenised_data(), extra_stopwords(), by = "word")
+    })
 
   })
 }
