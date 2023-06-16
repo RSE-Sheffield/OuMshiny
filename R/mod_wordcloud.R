@@ -52,7 +52,10 @@ mod_wordcloud_server <- function(id){
   moduleServer( id, function(input, output, session){
 
     ds_name <- reactive(input$dataset)
-    data <- reactive({get_data(input$dataset)})
+    tokenised_data <- reactive({
+      data <- get_data(input$dataset)
+      generate_tokens(data)
+    })
 
     wordcloud_server("left", ds_name, data)
     wordcloud_server("right", ds_name, data)
