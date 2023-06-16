@@ -42,7 +42,8 @@ wordcloud_ui <- function(id) {
       uiOutput(ns("controls")),
       selectInput(ns("condition"), "Filter by Condition", c("ITT", "Baseline") ),
       sliderInput(ns("rating"), "Filter by Rating", min = 1, max = 7, value = c(1,7), step = 0.5),
-      wordcloud2Output(ns("wc_plot")))
+      wordcloud2Output(ns("wc_plot")),
+      plotOutput(ns("wf_plot")))
   )
 }
 
@@ -79,6 +80,8 @@ mod_wordcloud_server <- function(id){
 #'
 #' @noRd
 #'
+#' @import ggplot2
+#'
 #' @importFrom shiny renderUI selectInput reactive req
 #' @importFrom dplyr filter
 #' @importFrom wordcloud2 renderWordcloud2 wordcloud2
@@ -99,24 +102,21 @@ wordcloud_server <- function(id, ds_name, data, n_words) {
              mean_rating >= input$rating[1] & mean_rating <= input$rating[2])
     })
 
+    word_freqs <- reactive(generate_word_freqs(filtered_data(), n_words()))
+
+
     output$wc_plot <- renderWordcloud2({
-      word_freqs <- generate_word_freqs(filtered_data(), n_words())
-      wordcloud2(word_freqs, rotateRatio = 0)
+      wordcloud2(word_freqs(), rotateRatio = 0)
+    })
+
+    output$wf_plot <- renderPlot({
+      ggplot(word_freqs(), aes(x = n, y = reorder(word, n))) +
+        geom_col() +
+        ylab("Word") +
+        scale_x_continuous(name = "frequency", limits = c(0, 200))
     })
   })
 }
-
-double_wordcloud_demo <- function() {
-
-  ui <- fluidPage(mod_wordcloud_ui("wordcloud"))
-  server <- function(input, output, session) {
-    mod_wordcloud_server("wordcloud")
-  }
-
-  shinyApp(ui, server)
-}
-
-double_wordcloud_demo()
 
 ## To be copied in the UI
 # mod_wordcloud_ui("mod_wordcloud_1")
