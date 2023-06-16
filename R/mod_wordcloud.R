@@ -113,8 +113,12 @@ wordcloud_server <- function(id, ds_name, data, n_words) {
       ggplot(word_freqs(), aes(x = n, y = reorder(word, n))) +
         geom_col() +
         ylab("Word") +
-        scale_x_continuous(name = "frequency", limits = c(0, 200))
-    })
+        scale_x_continuous(name = "Frequency",
+                           limits = c(0, 100),
+                           expand = c(0,0)) +
+        theme_bw() +
+        theme(text = element_text(size = 18))
+    }, height = 700)
   })
 }
 
