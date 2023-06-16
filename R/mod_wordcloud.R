@@ -14,7 +14,8 @@ mod_wordcloud_ui <- function(id){
     selectInput(ns("dataset"), "Select Dataset", c("Covid-19 Vaccine" = "vaccine",
                                                    "Brexit" = "brexit",
                                                    "Veganism" = "veganism")),
-    hr(),
+    numericInput(ns("N_words"), "Please select the number of words you'd like displayed",
+                 value = 25, max = 50, min = 0),
     textAreaInput(ns("extra_stopwords"),
                   "Please enter any additional words you'd like to exclude from the wordcloud\n(seperate each word by a space or newline)"),
 
@@ -60,13 +61,16 @@ mod_wordcloud_server <- function(id){
       generate_tokens(data)
     })
 
-    wordcloud_server("left", ds_name, data)
-    wordcloud_server("right", ds_name, data)
     extra_stopwords <- reactive({ get_extra_stopwords(input$extra_stopwords) })
 
     data <- reactive({
       anti_join(tokenised_data(), extra_stopwords(), by = "word")
     })
+
+    N_words <- reactive(input$N_words)
+
+    wordcloud_server("left", ds_name, data, N_words)
+    wordcloud_server("right", ds_name, data, N_words)
 
   })
 }
@@ -78,7 +82,7 @@ mod_wordcloud_server <- function(id){
 #' @importFrom shiny renderUI selectInput reactive req
 #' @importFrom dplyr filter
 #' @importFrom wordcloud2 renderWordcloud2 wordcloud2
-wordcloud_server <- function(id, ds_name, data) {
+wordcloud_server <- function(id, ds_name, data, n_words) {
   moduleServer( id, function(input, output, session){
 
     output$controls <- renderUI({
@@ -96,7 +100,7 @@ wordcloud_server <- function(id, ds_name, data) {
     })
 
     output$wc_plot <- renderWordcloud2({
-      word_freqs <- generate_word_freqs(filtered_data())
+      word_freqs <- generate_word_freqs(filtered_data(), n_words())
       wordcloud2(word_freqs, rotateRatio = 0)
     })
   })
