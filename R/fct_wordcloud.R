@@ -47,7 +47,7 @@ generate_tokens <- function(data_in) {
 #' @noRd
 get_extra_stopwords <- function(input) {
   as.data.frame(
-    strsplit(input,
+    strsplit(tolower(input),
            "([[:punct:]]*[[:space:]]+)"),
     col.names = "word")
 }
