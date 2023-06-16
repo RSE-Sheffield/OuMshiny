@@ -1,22 +1,50 @@
-#' wordcloud
+#' generate_word_freqs
 #'
-#' @description A fct function
+#' @description
+#' Takes a data frame of tokens and summarises them into counts per token.
+#' Then extracts the top N entries (default: 25).
+#'
+#' @param data_in dataframe of tokens
+#' @param top_n number of rows to extract from the top of the summarised data frame
 #'
 #' @return The return value, if any, from executing the function.
 #'
 #' @noRd
 #'
-#' @import tidytext dplyr
+#' @import dplyr
 generate_word_freqs <- function(data_in, top_n = 25) {
   count(data_in, word, sort = T) %>%
     slice_head(n = top_n)
 }
 
+#' generate_tokens
+#'
+#' @description
+#' Takes a data frame of arguments and tokenises them, removing stop words
+#'
+#' @param data_in A data frame with (at least) an arguments column.
+#' Usually also has arguer_position, argument_position, rater_position, and mean_rating columns
+#'
+#' @return data frame of tokens and additional info
+#'
+#' @noRd
+#'
+#' @import dplyr tidytext
 generate_tokens <- function(data_in) {
   unnest_tokens(data_in, word, arguments) %>%
     anti_join(tidytext::stop_words, by = "word")
 }
 
+#' get_extra_stopwords
+#'
+#' @description
+#' Takes a string and effectively tokenises it, splitting it into a list of words
+#'
+#' @param input A string
+#'
+#' @return A data frame of tokens with the column name "word"
+#'
+#' @noRd
 get_extra_stopwords <- function(input) {
   as.data.frame(
     strsplit(input,
@@ -24,6 +52,16 @@ get_extra_stopwords <- function(input) {
     col.names = "word")
 }
 
+#' generate_input_list
+#'
+#' @description
+#' Takes a topic and returns meaningful names for Pro- and Anti- argument positions
+#'
+#' @param topic String indicating which topic to select
+#'
+#' @return A vector of named values
+#'
+#' @noRd
 generate_input_list <- function(topic) {
 
   switch(topic,
