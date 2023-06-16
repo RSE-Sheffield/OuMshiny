@@ -7,19 +7,14 @@
 #' @noRd
 #'
 #' @import tidytext dplyr
-generate_word_freqs <- function(data_in) {
-  tidy_text_df <- data_in %>%
-    tidytext::unnest_tokens(word, arguments) %>%
-    rowwise() %>%
-    mutate(word_len = nchar(word)) %>%
-    filter(word_len > 2) %>%
-    ungroup() %>%
-    #mutate_at("word", funs(wordStem((.), language = "en")))
-    anti_join(tidytext::stop_words, by = "word") %>%
-    count(word, sort = T) %>%
-    slice_head(n = 100)
+generate_word_freqs <- function(data_in, top_n = 25) {
+  count(data_in, word, sort = T) %>%
+    slice_head(n = top_n)
+}
 
-  return(tidy_text_df)
+generate_tokens <- function(data_in) {
+  unnest_tokens(data_in, word, arguments) %>%
+    anti_join(tidytext::stop_words, by = "word")
 }
 
 
