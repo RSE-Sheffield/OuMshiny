@@ -35,7 +35,8 @@ Imports:
     shiny (>= 1.7.4),
     stringr,
     tidytext,
-    wordcloud2
+    wordcloud2,
+    ggplot2
 Remotes:
     github::gaospecial/wordcloud2
 Suggests: 
