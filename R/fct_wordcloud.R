@@ -17,6 +17,12 @@ generate_tokens <- function(data_in) {
     anti_join(tidytext::stop_words, by = "word")
 }
 
+get_extra_stopwords <- function(input) {
+  as.data.frame(
+    strsplit(input,
+           "([[:punct:]]*[[:space:]]+)"),
+    col.names = "word")
+}
 
 generate_input_list <- function(topic) {
 
