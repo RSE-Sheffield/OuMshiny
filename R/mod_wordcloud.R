@@ -11,7 +11,7 @@ mod_wordcloud_ui <- function(id){
   ns <- NS(id)
   tabPanel(
     title <- id,
-    selectInput(ns("dataset"), "Select Dataset", c("Covid-19 Vaccine" = "vaccine",
+    pickerInput(ns("dataset"), "Select Dataset", c("Covid-19 Vaccine" = "vaccine",
                                                    "Brexit" = "brexit",
                                                    "Veganism" = "veganism")),
     numericInput(ns("N_words"), "Please select the number of words you'd like displayed",
@@ -40,10 +40,13 @@ wordcloud_ui <- function(id) {
   tagList(
     wellPanel(
       uiOutput(ns("controls")),
-      selectInput(ns("condition"), "Filter by Condition", c("ITT", "Baseline") ),
-      sliderInput(ns("rating"), "Filter by Rating", min = 1, max = 7, value = c(1,7), step = 0.5),
-      wordcloud2Output(ns("wc_plot")),
-      plotOutput(ns("wf_plot")))
+      uiOutput(ns("conditions")),
+      sliderInput(ns("rating"), "Filter by Rating", min = 1, max = 7, value = c(1,7), step = 0.5)
+    ),
+    wellPanel(
+      plotOutput(ns("wf_plot"), height = 700),
+      wordcloud2Output(ns("wc_plot"))
+    )
   )
 }
 
@@ -90,12 +93,23 @@ wordcloud_server <- function(id, ds_name, data, n_words) {
 
     output$controls <- renderUI({
       ns <- session$ns
-      selectInput(ns("arg_pos"), "Filter by Arguer position", choices = generate_input_list(ds_name()))
+      pickerInput(inputId = ns("arg_pos"),
+                  label = "Filter by Arguer position",
+                  choices = generate_input_list(ds_name()))
+    })
+    output$conditions <- renderUI({
+      ns <- session$ns
+      req(input$arg_pos)
+      pickerInput(inputId = ns("condition"),
+                  label = "Filter by Condition",
+                  choices = c("Baseline", "ITT"),
+                  choicesOpt = list(subtext = generate_subtext(ds_name(),
+                                                               input$arg_pos)))
     })
 
 
     filtered_data <- reactive({
-      req(input$arg_pos)
+      req(input$condition)
       filter(data(),
              arguer_position == input$arg_pos,
              condition == input$condition,
@@ -104,6 +118,10 @@ wordcloud_server <- function(id, ds_name, data, n_words) {
 
     word_freqs <- reactive(generate_word_freqs(filtered_data(), n_words()))
 
+    description <- reactive({
+      req(input$condition)
+      generate_description(ds_name(), input$arg_pos, input$condition)
+    })
 
     output$wc_plot <- renderWordcloud2({
       wordcloud2(word_freqs(), rotateRatio = 0)
@@ -112,12 +130,15 @@ wordcloud_server <- function(id, ds_name, data, n_words) {
     output$wf_plot <- renderPlot({
       ggplot(word_freqs(), aes(x = n, y = reorder(word, n))) +
         geom_col() +
-        ylab("Word") +
+        geom_text(aes(label = n), hjust = 1.5, size = 5, colour = "white") +
+        ylab(NULL) +
         scale_x_continuous(name = "Frequency",
                            limits = c(0, 100),
                            expand = c(0,0)) +
         theme_bw() +
-        theme(text = element_text(size = 18))
+        theme(text = element_text(size = 18),
+              plot.margin = margin(5.5,15,5.5,5.5, "points")) +
+        ggtitle(description())
     }, height = 700)
   })
 }
