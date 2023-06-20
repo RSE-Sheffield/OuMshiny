@@ -96,3 +96,28 @@ topic_list <- list(
       "ITT" = c("arguer" = "Non-Vegan", "argument" = "Vegan", "rater" = "Vegan"))
   )
 )
+
+#' generate_description
+#'
+#' @description
+#' Takes a topic, position, and condition and returns a description of that
+#' combination
+#'
+#' @param topic String indicating which topic to select
+#' @param position String indicating arguer position (Pro or Anti)
+#' @param condition Sting indicating condition (ITT or Baseline)
+#'
+#' @return A string describing the combination
+#'
+#' @importFrom stringr str_glue
+#'
+#' @noRd
+generate_description <- function(topic, position, condition) {
+
+  arguer <- topic_list[[topic]][[position]][[condition]][['arguer']]
+  argument <- topic_list[[topic]][[position]][[condition]][['argument']]
+  rater <- topic_list[[topic]][[position]][[condition]][['rater']]
+
+  template_string <- "Arguer: {arguer}\nArgument: {argument}\nRaters: {rater}"
+  str_glue(template_string)
+}
