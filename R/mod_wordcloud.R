@@ -6,7 +6,8 @@
 #'
 #' @noRd
 #'
-#' @importFrom shiny NS tabPanel selectInput hr fluidRow column
+#' @importFrom shiny NS tabPanel fluidRow column
+#' @importFrom shinyWidgets pickerInput
 mod_wordcloud_ui <- function(id){
   ns <- NS(id)
   tabPanel(
@@ -33,7 +34,7 @@ mod_wordcloud_ui <- function(id){
 #'
 #' @noRd
 #'
-#' @importFrom shiny NS tagList wellPanel uiOutput selectInput sliderInput
+#' @importFrom shiny NS tagList wellPanel uiOutput sliderInput plotOutput
 #' @importFrom wordcloud2 wordcloud2Output
 wordcloud_ui <- function(id) {
   ns <- NS(id)
@@ -85,9 +86,10 @@ mod_wordcloud_server <- function(id){
 #'
 #' @import ggplot2
 #'
-#' @importFrom shiny renderUI selectInput reactive req
+#' @importFrom shiny renderUI reactive req
 #' @importFrom dplyr filter
 #' @importFrom wordcloud2 renderWordcloud2 wordcloud2
+#' @importFrom shinyWidgets pickerInput
 wordcloud_server <- function(id, ds_name, data, n_words) {
   moduleServer( id, function(input, output, session){
 
