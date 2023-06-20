@@ -69,3 +69,30 @@ generate_input_list <- function(topic) {
          "vaccine" = c("Pro-Vaccine" = "Pro", "Anti-Vaccine" = "Anti"),
          "veganism" = c("Vegan" = "Pro", "Non-Vegan" = "Anti"))
 }
+
+topic_list <- list(
+  "brexit" = list(
+    "Pro" = list(
+      "Baseline" = c("arguer" = "Leave", "argument" = "Leave", "rater" = "Leave"),
+      "ITT" = c("arguer" = "Leave", "argument" = "Remain", "rater" = "Remain")),
+    "Anti" = list(
+      "Baseline" = c("arguer" = "Remain", "argument" = "Remain", "rater" = "Remain"),
+      "ITT" = c("arguer" = "Remain", "argument" = "Leave", "rater" = "Leave"))
+  ),
+  "vaccine" = list(
+    "Pro" = list(
+      "Baseline" = c("arguer" = "Pro Covid Vaccine", "argument" = "Pro Covid Vaccine", "rater" = "Pro Covid Vaccine"),
+      "ITT" = c("arguer" = "Pro Covid Vaccine", "argument" = "Anti Covid Vaccine", "rater" = "Anti Covid Vaccine")),
+    "Anti" = list(
+      "Baseline" = c("arguer" = "Anti Covid Vaccine", "argument" = "Anti Covid Vaccine", "rater" = "Anti Covid Vaccine"),
+      "ITT" = c("arguer" = "Anti Covid Vaccine", "argument" = "Pro Covid Vaccine", "rater" = "Pro Covid Vaccine"))
+  ),
+  "veganism" = list(
+    "Pro" = list(
+      "Baseline" = c("arguer" = "Vegan", "argument" = "Vegan", "rater" = "Vegan"),
+      "ITT" = c("arguer" = "Vegan", "argument" = "Non-Vegan", "rater" = "Non-Vegan")),
+    "Anti" = list(
+      "Baseline" = c("arguer" = "Non-Vegan", "argument" = "Non-Vegan", "rater" = "Non-Vegan"),
+      "ITT" = c("arguer" = "Non-Vegan", "argument" = "Vegan", "rater" = "Vegan"))
+  )
+)
