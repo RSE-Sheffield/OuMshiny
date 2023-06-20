@@ -70,6 +70,56 @@ generate_input_list <- function(topic) {
          "veganism" = c("Vegan" = "Pro", "Non-Vegan" = "Anti"))
 }
 
+
+#' generate_description
+#'
+#' @description
+#' Takes a topic, position, and condition and returns a description of that
+#' combination
+#'
+#' @param topic String indicating which topic to select
+#' @param position String indicating arguer position (Pro or Anti)
+#' @param condition Sting indicating condition (ITT or Baseline)
+#'
+#' @return A string describing the combination
+#'
+#' @importFrom stringr str_glue
+#'
+#' @noRd
+generate_description <- function(topic, position, condition) {
+
+  arguer <- topic_list[[topic]][[position]][[condition]][['arguer']]
+  argument <- topic_list[[topic]][[position]][[condition]][['argument']]
+  rater <- topic_list[[topic]][[position]][[condition]][['rater']]
+
+  template_string <- "Arguer: {arguer}\nArgument: {argument}\nRaters: {rater}"
+  str_glue(template_string)
+}
+
+#' generate_subtext
+#'
+#' @description
+#' Takes a topic and position to generate the subtext for the different
+#' conditions
+#'
+#' @param topic String indicating which topic to select
+#' @param position String indicating arguer position (Pro or Anti)
+#'
+#' @return A vector of strings to be used as subtexts
+#'
+#' @importFrom stringr str_glue
+#'
+#' @noRd
+generate_subtext <- function(topic, position) {
+
+  topic_sublist <- data.frame(topic_list[[topic]][[position]])
+
+  str_glue("Argument: {argument}, Raters: {rater}",
+           argument = topic_sublist["argument",],
+           rater = topic_sublist["rater",])
+
+}
+
 topic_list <- list(
   "brexit" = list(
     "Pro" = list(
@@ -96,28 +146,3 @@ topic_list <- list(
       "ITT" = c("arguer" = "Non-Vegan", "argument" = "Vegan", "rater" = "Vegan"))
   )
 )
-
-#' generate_description
-#'
-#' @description
-#' Takes a topic, position, and condition and returns a description of that
-#' combination
-#'
-#' @param topic String indicating which topic to select
-#' @param position String indicating arguer position (Pro or Anti)
-#' @param condition Sting indicating condition (ITT or Baseline)
-#'
-#' @return A string describing the combination
-#'
-#' @importFrom stringr str_glue
-#'
-#' @noRd
-generate_description <- function(topic, position, condition) {
-
-  arguer <- topic_list[[topic]][[position]][[condition]][['arguer']]
-  argument <- topic_list[[topic]][[position]][[condition]][['argument']]
-  rater <- topic_list[[topic]][[position]][[condition]][['rater']]
-
-  template_string <- "Arguer: {arguer}\nArgument: {argument}\nRaters: {rater}"
-  str_glue(template_string)
-}
