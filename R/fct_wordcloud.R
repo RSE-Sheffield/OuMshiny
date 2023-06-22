@@ -96,6 +96,14 @@ generate_description <- function(topic, position, condition) {
   str_glue(template_string)
 }
 
+default_words <- function(topic){
+
+  switch(topic,
+        "brexit" = c("brexit", "eu", "european", "union", "uk", "europe"),
+        "vaccine" = c("vaccine", "vaccines", "vaccinated", "vaccination", "covid", "19", "virus"),
+        "veganism" = c("vegan", "meat", "animal", "animals"))
+}
+
 #' generate_subtext
 #'
 #' @description
