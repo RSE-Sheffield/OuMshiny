@@ -66,7 +66,7 @@ generate_input_list <- function(topic) {
 
   switch(topic,
          "brexit" = c("Leave" = "Pro", "Remain" = "Anti"),
-         "vaccine" = c("Pro-Vaccine" = "Pro", "Anti-Vaccine" = "Anti"),
+         "vaccine" = c("Pro Covid Vaccine" = "Pro", "Anti Covid Vaccine" = "Anti"),
          "veganism" = c("Vegan" = "Pro", "Non-Vegan" = "Anti"))
 }
 

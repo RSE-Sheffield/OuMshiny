@@ -16,7 +16,7 @@ app_ui <- function(request) {
         includeMarkdown("inst/outline.md")
       ),
       mod_wordcloud_ui("Wordcloud"),
-      mod_dtouput_ui("vaccine", c("Pro-Vaccine", "Vaccine Hesitant")),
+      mod_dtouput_ui("vaccine", c("Pro Covid Vaccine", "Anti Covid Vaccine")),
       mod_dtouput_ui("brexit", c("Leave", "Remain")),
       mod_dtouput_ui("veganism", c("Vegan", "Non-Vegan")),
     )
