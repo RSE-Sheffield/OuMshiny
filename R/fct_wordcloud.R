@@ -122,10 +122,12 @@ generate_subtext <- function(topic, position) {
 
   topic_sublist <- data.frame(topic_list[[topic]][[position]])
 
-  str_glue("Argument: {argument}, Raters: {rater}",
-           argument = topic_sublist["argument",],
-           rater = topic_sublist["rater",])
-
+  conditions <- c("Baseline", "ITT")
+  labels <- str_glue("Argument: {argument}, Raters: {rater}",
+                     argument = topic_sublist["argument",],
+                     rater = topic_sublist["rater",])
+  names(conditions) <- labels
+  return(conditions)
 }
 
 topic_list <- list(
