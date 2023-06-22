@@ -1,6 +1,6 @@
 #' mod_wordcloud UI Function
 #'
-#' @description A shiny Module.
+#' @description A shiny Module that produces the wordcloud UI
 #'
 #' @param id,input,output,session Internal parameters for {shiny}.
 #'
@@ -12,13 +12,17 @@ mod_wordcloud_ui <- function(id){
   ns <- NS(id)
   tabPanel(
     title <- id,
-    pickerInput(ns("dataset"), "Select Dataset", c("Covid-19 Vaccine" = "vaccine",
-                                                   "Brexit" = "brexit",
-                                                   "Veganism" = "veganism")),
-    numericInput(ns("N_words"), "Please select the number of words you'd like displayed",
-                 value = 25, max = 50, min = 0),
-    textAreaInput(ns("extra_stopwords"),
-                  "Please enter any additional words you'd like to exclude from the wordcloud\n(seperate each word by a space or newline)"),
+    fluidRow(
+      column(2, pickerInput(ns("dataset"),
+                            "Select Dataset",
+                            c("Covid-19 Vaccine" = "vaccine",
+                              "Brexit" = "brexit",
+                              "Veganism" = "veganism"))),
+      column(2, numericInput(ns("N_words"),
+                             "Number of words to display",
+                             value = 25, max = 50, min = 0,
+                             width = "80%")),
+      column(8, uiOutput(ns("ex_sw")))),
 
     fluidRow(
       column(6, wordcloud_ui(ns("left"))),
@@ -67,6 +71,14 @@ mod_wordcloud_server <- function(id){
     tokenised_data <- reactive({
       data <- get_data(input$dataset)
       generate_tokens(data)
+    })
+
+    output$ex_sw <- renderUI({
+      ns <- session$ns
+      default_wrds <- paste(default_words(input$dataset), collapse = " ")
+      textAreaInput(ns("extra_stopwords"),
+                    "Additional words to exclude from the wordcloud\n(seperate each word by a space or newline)",
+                    value = default_wrds, width = "100%")
     })
 
     extra_stopwords <- reactive({ get_extra_stopwords(input$extra_stopwords) })
@@ -120,13 +132,13 @@ wordcloud_server <- function(id, ds_name, data, n_words) {
     })
 
     output$wc_plot <- renderWordcloud2({
-      wordcloud2(word_freqs(), rotateRatio = 0)
+      wordcloud2(word_freqs(), rotateRatio = 0, shuffle = F, shape = "square")
     })
 
     output$wf_plot <- renderPlot({
       ggplot(word_freqs(), aes(x = n, y = reorder(word, n))) +
         geom_col() +
-        geom_text(aes(label = n), hjust = 1.5, size = 5, colour = "white") +
+        geom_text(aes(label = n), hjust = 1.2, size = 5, colour = "white") +
         ylab(NULL) +
         scale_x_continuous(name = "Frequency",
                            limits = c(0, 100),
