@@ -1,6 +1,7 @@
 # Opening up our minds project
 
-Project devised and run by [Lotty Brand](https://lottybrand.wordpress.com/) and [Tom Stafford](https://tomstafford.sites.sheffield.ac.uk/), app created by Daniel Brady.
+The Project was devised and run by [Lotty Brand](https://lottybrand.wordpress.com/) and [Tom Stafford](https://tomstafford.sites.sheffield.ac.uk/).  
+The App was created by [Dan Brady](https://github.com/ubdbra001).
 
 ## Overview
 
@@ -18,7 +19,11 @@ We then asked 100 different people from each side of the debate to rate how stro
 
 ## Shiny App
 
-This app then takes the ratings for each argument and calculates the mean rating for that argument. This allow for the exploration of the data collected as part of the project. Specifically, allowing users to:
+This app allows for exploration of the data collected as part of the project, and consists of two parts.
+
+The "__Word clouds__" tab breaks the arguments for a specific topic down into individual words, and uses a word cloud and word frequency graph to visualise which words appear the most often. These visualisations can be customised by using the controls provided to compare across the different conditions for a topic, filter by specific ratings, and exclude specific words.
+
+The "__Raw data__" tab presents all the arguments for a particular topic, allowing users to:
 
 -   View the arguments made for or against a particular topic
 
@@ -32,6 +37,6 @@ More information about the project, the results, and this app can be found in th
 
 -   The Paper
 
--   Data analysis repository
+-   [Data analysis repository](https://github.com/lottybrand/Ideological_Turing_Test_ITT)
 
 -   [Shiny App repository](https://github.com/RSE-Sheffield/OuMshiny)
