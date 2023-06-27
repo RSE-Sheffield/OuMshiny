@@ -12,18 +12,16 @@ mod_wordcloud_ui <- function(id){
   ns <- NS(id)
   tabPanel(
     title <- id,
-    fluidRow(
-      column(2, pickerInput(ns("dataset"),
-                            "Select Dataset",
-                            c("Covid-19 Vaccine" = "vaccine",
-                              "Brexit" = "brexit",
-                              "Veganism" = "veganism"))),
-      column(2, numericInput(ns("N_words"),
-                             "Number of words to display",
-                             value = 25, max = 50, min = 0,
-                             width = "80%")),
-      column(8, uiOutput(ns("ex_sw")))),
-
+    wellPanel(
+      pickerInput(ns("dataset"),
+                  "Select Dataset",
+                  c("Covid-19 Vaccine" = "vaccine",
+                    "Brexit" = "brexit",
+                    "Veganism" = "veganism")),
+      uiOutput(ns("ex_sw")),
+      numericInput(ns("N_words"),
+                   "Number of words to display",
+                   value = 25, max = 50, min = 0)),
     fluidRow(
       column(6, wordcloud_ui(ns("left"))),
       column(6, wordcloud_ui(ns("right")))
