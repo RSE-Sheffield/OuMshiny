@@ -20,8 +20,8 @@ mod_wordcloud_ui <- function(id){
                     "Veganism" = "veganism")),
       uiOutput(ns("ex_sw")),
       numericInput(ns("N_words"),
-                   "Number of words to display",
-                   value = 25, max = 50, min = 0)),
+                   "Maximum number of words to display",
+                   value = 20, max = 50, min = 1)),
     fluidRow(
       column(6, wordcloud_ui(ns("left"))),
       column(6, wordcloud_ui(ns("right")))
@@ -37,7 +37,6 @@ mod_wordcloud_ui <- function(id){
 #' @noRd
 #'
 #' @importFrom shiny NS tagList wellPanel uiOutput sliderInput plotOutput
-#' @importFrom wordcloud2 wordcloud2Output
 wordcloud_ui <- function(id) {
   ns <- NS(id)
   tagList(
@@ -49,8 +48,7 @@ wordcloud_ui <- function(id) {
       sliderInput(ns("rating"), "Filter by Rating", min = 1, max = 7, value = c(1,7), step = 0.5)
     ),
     wellPanel(
-      wordcloud2Output(ns("wc_plot")),
-      br(),
+      plotOutput(ns("wc_plot")),
       plotOutput(ns("wf_plot"), height = 700)
     )
   )
@@ -101,7 +99,7 @@ mod_wordcloud_server <- function(id){
 #'
 #' @importFrom shiny renderUI reactive req
 #' @importFrom dplyr filter
-#' @importFrom wordcloud2 renderWordcloud2 wordcloud2
+#' @importFrom ggwordcloud geom_text_wordcloud
 #' @importFrom shinyWidgets pickerInput
 wordcloud_server <- function(id, ds_name, data, n_words) {
   moduleServer( id, function(input, output, session){
@@ -129,13 +127,18 @@ wordcloud_server <- function(id, ds_name, data, n_words) {
       generate_description(ds_name(), input$arg_pos, input$condition)
     })
 
-    output$wc_plot <- renderWordcloud2({
-      wordcloud2(word_freqs(), rotateRatio = 0, shuffle = F, shape = "square")
+    output$wc_plot <- renderPlot({
+      ggplot(data = word_freqs(), mapping = aes(label = word, size = n, colour = word)) +
+        geom_text_wordcloud(shape = "square", grid_margin = 1.5, seed = 2806) +
+        scale_size_area(max_size = 25) +
+        ggtitle(description()) +
+        theme_bw() +
+        theme(title = element_text(size = 15))
     })
 
     output$wf_plot <- renderPlot({
-      ggplot(word_freqs(), aes(x = n, y = reorder(word, n))) +
-        geom_col() +
+      ggplot(word_freqs(), aes(x = n, y = reorder(word, n), fill = word)) +
+        geom_col(show.legend = F) +
         geom_text(aes(label = n), hjust = 1.2, size = 5, colour = "white") +
         ylab(NULL) +
         scale_x_continuous(name = "Frequency",
@@ -143,8 +146,7 @@ wordcloud_server <- function(id, ds_name, data, n_words) {
                            expand = c(0,0)) +
         theme_bw() +
         theme(text = element_text(size = 18),
-              plot.margin = margin(5.5,15,5.5,5.5, "points")) +
-        ggtitle(description())
+              plot.margin = margin(5.5,15,5.5,5.5, "points"))
     }, height = 700)
   })
 }

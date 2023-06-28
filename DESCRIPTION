@@ -35,11 +35,9 @@ Imports:
     shiny (>= 1.7.4),
     stringr,
     tidytext,
-    wordcloud2,
+    ggwordcloud,
     ggplot2,
     shinyWidgets
-Remotes:
-    github::gaospecial/wordcloud2
 Suggests: 
     covr,
     spelling,
