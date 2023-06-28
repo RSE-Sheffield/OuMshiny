@@ -106,9 +106,13 @@ wordcloud_server <- function(id, ds_name, data, n_words) {
 
     output$controls <- renderUI({
       ns <- session$ns
+      inputList <- generate_input_list(ds_name())
+      select_idx <- switch(id, "left" = 1, "right" = 2)
+
       pickerInput(inputId = ns("arg_pos"),
                   label = "Filter by Arguer position",
-                  choices = generate_input_list(ds_name()))
+                  choices = inputList,
+                  selected = inputList[select_idx])
     })
 
 
