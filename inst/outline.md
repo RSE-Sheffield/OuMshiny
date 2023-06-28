@@ -35,7 +35,7 @@ The "__Raw data__" tab presents all the arguments for a particular topic, allowi
 
 More information about the project, the results, and this app can be found in the links below:
 
--   The Paper
+-   [The Paper](https://psyarxiv.com/2e9wn)
 
 -   [Data analysis repository](https://github.com/lottybrand/Ideological_Turing_Test_ITT)
 
