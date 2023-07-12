@@ -2,10 +2,19 @@ Package: OuMshiny
 Title: App for exploring the Opening up our Minds data
 Version: 0.0.0.9000
 Authors@R: c(
-    person("Daniel", "Brady", , "daniel.brady@sheffield.ac.uk", role = c("cre", "aut"),
+    person(given = "Daniel",
+           family = "Brady",
+           email = "daniel.brady@sheffield.ac.uk",
+           role = c("cre", "aut"),
            comment = c(ORCID = "0000-0003-4671-0676")),
-    person("Lotty", "Brand", "c.brand@sheffield.ac.uk", role = "aut"),
-    person("Tom", "Stafford", "t.stafford@sheffield.ac.uk", role = "aut")
+    person(given = "Lotty",
+           family = "Brand",
+           email = "c.brand@sheffield.ac.uk",
+           role = "aut"),
+    person(given = "Tom",
+           family = "Stafford",
+           email = "t.stafford@sheffield.ac.uk",
+           role = "aut")
   )
 Description: An app that allows users to sort, filter, and search the
     arguments collected and rated around specific topics as part of the
@@ -24,7 +33,11 @@ Imports:
     pkgload,
     rlang,
     shiny (>= 1.7.4),
-    stringr
+    stringr,
+    tidytext,
+    ggwordcloud,
+    ggplot2,
+    shinyWidgets
 Suggests: 
     covr,
     spelling,
